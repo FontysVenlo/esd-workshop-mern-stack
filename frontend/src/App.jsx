@@ -1,7 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-
 import './App.css'
 // In your main App.tsx or wherever you want to use it
 import TRexGame from './components/TRexGame';
@@ -12,10 +9,9 @@ function App() {
   const api = import.meta.env.VITE_BACKEND_URL;
 
   const handleClick = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     const userInput = window.prompt("Please enter your name:");
-
 
     // Show browser prompt with default value
 
@@ -39,10 +35,6 @@ function App() {
         setName(userInput);
 
       }
-
-
-
-
 
     }
   };
