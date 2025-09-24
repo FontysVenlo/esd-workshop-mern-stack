@@ -5,10 +5,10 @@ const getUser = async (req, res) => {
 }
 
 const setUser = async (req, res) => {
-    const { rNumber, name,score } = req.body
+    const { name,score } = req.body
 
     try{
-        const user = await UserModel.create({rNumber,name,score})
+        const user = await UserModel.create({name,score})
         res.status(200).json({user})
     }catch(error){
         res.status(400).json({error: error.message})

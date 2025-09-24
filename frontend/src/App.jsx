@@ -8,6 +8,7 @@ import TRexGame from './components/TRexGame';
 
 function App() {
   const [name, setName] = useState("");
+
   const api = import.meta.env.VITE_BACKEND_URL;
 
   const handleClick = async (e) => {
@@ -20,7 +21,7 @@ function App() {
 
     if (userInput !== null) {
 
-      const username = { rNumber: 1, name: userInput, score: 1 }
+      const username = {name: userInput, score: 1 }
 
       const response = await fetch(`${api}/api/routes/set-user`,
         {
