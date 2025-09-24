@@ -3,7 +3,9 @@ const express = require('express');
 const userRoutes = require('./routes/users');
 const mongoose = require('mongoose');
 const { error } = require('console');
+const cors = require("cors");
 
+const allowedOrigins = [process.env.FRONT_END_URL, process.env.MONGO_DB_URL];
 //express app
 const app = express();
 
@@ -16,6 +18,19 @@ app.use((req, res, next) => {
   console.log(req.path, req.method)
   next();
 })
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'Set-Cookie', 'Accept'],
+  credentials: true,
+  exposedHeaders: ['Set-Cookie'],
+
+}));
+
+// Handle preflight requests
+// app.options('*', cors());
+
 app.use('/api/routes', userRoutes)
 
 mongoose.connect(process.env.MONGO_DB_URL).then(() => {
