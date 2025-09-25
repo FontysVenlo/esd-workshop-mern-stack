@@ -6,7 +6,7 @@ Pino worky
 - [ ] Add funny spritekv
 
 Georgi's worky
-- [ x ] connect backend and fronted
+- [x] connect backend and fronted
 - [ ] trasfor saving data from local storage to cookies
 - [ ] Username functionality
 - [ ] Socket.io - Leadrboard
