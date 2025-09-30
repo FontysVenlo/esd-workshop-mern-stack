@@ -44,10 +44,4 @@ export const getHighScore = (): number => {
 export const saveHighScore = (score: number): void => {
   localStorage.setItem('trex-high-score', score.toString());
   
-  // TODO: Submit high score to backend API
-  // fetch('/api/highscores', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({ score })
-  // });
 };
