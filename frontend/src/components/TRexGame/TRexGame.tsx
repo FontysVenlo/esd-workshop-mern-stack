@@ -2,18 +2,22 @@ import React, { useState, useCallback, useEffect } from 'react';
 import GameCanvas from './GameCanvas';
 import { useKeyboardControls } from '../../hooks/useKeyboardControls';
 import { GameState, TRexSprite } from '../../types/gameTypes';
-import { 
-  INITIAL_SPEED, 
-  GROUND_Y, 
-  TREX_HEIGHT, 
-  JUMP_VELOCITY 
+import {
+  INITIAL_SPEED,
+  GROUND_Y,
+  TREX_HEIGHT,
+  JUMP_VELOCITY
 } from '../../constants/gameConstants';
-import { getHighScore } from '../../utils/gameUtils';
+import { getCookieData } from '../../utils/gameUtils';
 import { spriteManager } from '../../utils/spriteManager';
 import { chromeSprites } from '../../config/spriteConfigs'; // Import your chosen config
 
 const TRexGame: React.FC = () => {
   const [spritesLoaded, setSpritesLoaded] = useState(false);
+  const dataFromCookies = getCookieData('trex-high-score');
+  const highScore = dataFromCookies.get("trex-high-score") ?? "0";
+
+
 
   useEffect(() => {
     const loadSprites = async () => {
@@ -43,7 +47,7 @@ const TRexGame: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>({
     state: 'WAITING',
     score: 0,
-    highScore: getHighScore(),
+    highScore: parseInt(highScore),
     speed: INITIAL_SPEED,
     trexY: GROUND_Y - TREX_HEIGHT,
     trexVelocityY: 0,
@@ -93,11 +97,11 @@ const TRexGame: React.FC = () => {
   }, []);
 
   const duck = useCallback((ducking: boolean) => {
-  setGameState(prevState => ({
-    ...prevState,
-    isDucking: ducking // Remove the "&& !prevState.isJumping" condition
-  }));
-}, []);
+    setGameState(prevState => ({
+      ...prevState,
+      isDucking: ducking // Remove the "&& !prevState.isJumping" condition
+    }));
+  }, []);
 
   useKeyboardControls({
     gameState: gameState.state,
@@ -115,7 +119,7 @@ const TRexGame: React.FC = () => {
           Use SPACE or ↑ to jump, ↓ to duck. Press SPACE to start/restart.
         </p>
       </div>
-      
+
       <div className="border-2 border-gray-300 rounded-lg overflow-hidden shadow-lg">
         <GameCanvas
           gameState={gameState}

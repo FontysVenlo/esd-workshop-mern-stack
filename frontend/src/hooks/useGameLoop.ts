@@ -1,17 +1,18 @@
 import { useCallback, useRef } from 'react';
 import { GameState, TRexSprite } from '../types/gameTypes';
-import { 
-  GROUND_Y, 
-  TREX_HEIGHT, 
-  TREX_DUCKING_HEIGHT, 
-  TREX_X, 
-  GRAVITY, 
-  SPEED_INCREMENT, 
-  OBSTACLE_SPAWN_RATE, 
-  TREX_WIDTH 
+import {
+  GROUND_Y,
+  TREX_HEIGHT,
+  TREX_DUCKING_HEIGHT,
+  TREX_X,
+  GRAVITY,
+  SPEED_INCREMENT,
+  OBSTACLE_SPAWN_RATE,
+  TREX_WIDTH
 } from '../constants/gameConstants';
-import { generateObstacle, checkCollision, saveHighScore } from '../utils/gameUtils';
-import { drawTRex, drawObstacle, drawGround, drawUI, drawHitboxes} from '../utils/drawingUtils';
+import { generateObstacle, checkCollision, saveToCookies, getCookieData } from '../utils/gameUtils';
+import { drawTRex, drawObstacle, drawGround, drawUI, drawHitboxes } from '../utils/drawingUtils';
+
 
 
 
@@ -31,6 +32,7 @@ export const useGameLoop = ({
   setTrexSprite
 }: UseGameLoopProps) => {
   const animationIdRef = useRef<number | null>(null);
+  const api = import.meta.env.VITE_BACKEND_URL;
 
   const gameLoop = useCallback(() => {
     const canvas = canvasRef.current;
@@ -77,12 +79,12 @@ export const useGameLoop = ({
       newState.score += 1;
 
       // Spawn obstacles
-      if (Math.random() < OBSTACLE_SPAWN_RATE && 
-          Date.now() - newState.lastObstacleSpawn > 1000) {
-        const lastObstacleX = newState.obstacles.length > 0 
+      if (Math.random() < OBSTACLE_SPAWN_RATE &&
+        Date.now() - newState.lastObstacleSpawn > 1000) {
+        const lastObstacleX = newState.obstacles.length > 0
           ? Math.max(...newState.obstacles.map(o => o.x))
           : canvas.width;
-        
+
         newState.obstacles.push(generateObstacle(lastObstacleX));
         newState.lastObstacleSpawn = Date.now();
       }
@@ -92,14 +94,20 @@ export const useGameLoop = ({
         .map(obstacle => ({ ...obstacle, x: obstacle.x - newState.speed }))
         .filter(obstacle => obstacle.x > -obstacle.width);
 
-     
+
 
       for (const obstacle of newState.obstacles) {
         if (checkCollision(trexHitbox, obstacle)) {
           newState.state = 'GAME_OVER';
           if (newState.score > newState.highScore) {
             newState.highScore = newState.score;
-            saveHighScore(newState.score);
+            saveToCookies('trex-high-score', newState.score);
+            const dataFromCookies = getCookieData('player-name', 'trex-high-score');
+            // Extract values
+            const playerName = dataFromCookies.get("player-name") ?? "";
+            const highScore = dataFromCookies.get("trex-high-score") ?? "0";
+
+            sendUserData(api, playerName,highScore)
           }
           break;
         }
@@ -113,7 +121,7 @@ export const useGameLoop = ({
 
     // Update T-Rex sprite
     setTrexSprite(prevSprite => ({
-      state: gameState.state === 'PLAYING' 
+      state: gameState.state === 'PLAYING'
         ? (gameState.isDucking ? 'ducking' : gameState.isJumping ? 'jumping' : 'running')
         : 'idle',
       animationFrame: prevSprite.animationFrame + 1
@@ -124,15 +132,15 @@ export const useGameLoop = ({
 
     // Draw everything
     drawGround(ctx, gameState.groundX);
-    
+
     gameState.obstacles.forEach(obstacle => {
       drawObstacle(ctx, obstacle);
     });
 
-    const trexY = gameState.isDucking 
+    const trexY = gameState.isDucking
       ? gameState.trexY + (TREX_HEIGHT - TREX_DUCKING_HEIGHT)
       : gameState.trexY;
-    
+
     drawTRex(ctx, TREX_X, trexY, trexSprite, gameState.isDucking);
     drawUI(ctx, gameState.score, gameState.highScore, gameState.state);
     // Add this line after drawUI call
@@ -142,6 +150,28 @@ export const useGameLoop = ({
       animationIdRef.current = requestAnimationFrame(gameLoop);
     }
   }, [canvasRef, gameState, trexSprite, setGameState, setTrexSprite]);
+
+  const sendUserData = async (api: string, playerName: string, score: string) => {
+    try {
+      const response = await fetch(`${api}/api/routes/set-user`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: playerName, score:score })
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        console.error("Failed to save user:", json.error);
+      } else {
+        console.log("User saved successfully:", json.user);
+      }
+    } catch (err) {
+      console.error("Error sending user data:", err);
+    }
+  };
+
 
   const startGameLoop = useCallback(() => {
     if (animationIdRef.current) {

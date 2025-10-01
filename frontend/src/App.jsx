@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 // In your main App.tsx or wherever you want to use it
 import TRexGame from './components/TRexGame';
+import { saveToCookies } from './utils/gameUtils';
 
 function App() {
   const [name, setName] = useState("");
@@ -13,29 +14,9 @@ function App() {
 
     const userInput = window.prompt("Please enter your name:");
 
-    // Show browser prompt with default value
-
     if (userInput !== null) {
-
-      const username = {name: userInput, score: 1 }
-
-      const response = await fetch(`${api}/api/routes/set-user`,
-        {
-          method: 'POST',
-          body: JSON.stringify(username),
-          credentials: 'include', // Include JWT cookies
-          headers: { 'Content-Type': 'application/json' }
-        }
-      )
-      const json = await response.json();
-
-      if (!response.ok) {
-        console.log(json.error)
-      } else {
-        setName(userInput);
-
-      }
-
+      saveToCookies('player-name',userInput )
+      setName(userInput);
     }
   };
   return (

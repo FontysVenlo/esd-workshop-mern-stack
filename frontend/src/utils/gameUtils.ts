@@ -55,11 +55,21 @@ const getCookie = (name: string): string | null => {
   return null;
 };
 
-// --- Your score functions ---
-export const getHighScore = (): number => {
-  return parseInt(getCookie('trex-high-score') || '0');
+// --- Dynamic multi-cookie getter ---
+export const getCookieData = (...names: string[]): Map<string, string> => {
+  const map = new Map<string, string>();
+  for (const name of names) {
+    const match = document.cookie
+      .split(";")
+      .map(c => c.trim())
+      .find(c => c.startsWith(name + "="));
+
+    map.set(name, match ? decodeURIComponent(match.split("=")[1]) : "");
+  }
+  return map; // never null
 };
 
-export const saveHighScore = (score: number): void => {
-  setCookie('trex-high-score', score.toString(), 1); 
+
+export const saveToCookies = (cookieName: string ,data: number): void => {
+  setCookie(cookieName, data.toString(), 1); 
 };
