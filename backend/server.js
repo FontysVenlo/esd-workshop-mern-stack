@@ -5,6 +5,10 @@ const mongoose = require('mongoose');
 const cors = require("cors");
 const cookieParser = require('cookie-parser')
 
+// Import WebSocket setup
+const setupWebSocket = require('./websocket')
+const http = require('http')
+
 
 const allowedOrigins = [process.env.FRONT_END_URL];
 //express app
@@ -35,9 +39,19 @@ app.use(cors({
 
 app.use('/api/routes', userRoutes)
 
+// --- Create HTTP server and attach Socket.IO ---
+const httpServer = http.createServer(app);
+
+// Make `io` available to the rest of the app
+const io = setupWebSocket(httpServer)
+
+app.set('socketio', io);
+
+
+
 mongoose.connect(process.env.MONGO_DB_URL).then(() => {
-  app.listen(process.env.BACKEND_PORT, () => {
-    console.log('connected to db & listenig to 4000...');
+  httpServer.listen(process.env.BACKEND_PORT, () => {
+    console.log('SERVER IS RUNNING & connected to db & listening on port', process.env.BACKEND_PORT);
   })
 }).catch((error) => { console.log(error) })
 
