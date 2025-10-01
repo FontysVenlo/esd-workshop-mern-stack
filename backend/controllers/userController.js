@@ -5,7 +5,8 @@ const getUser = async (req, res) => {
 }
 
 const setUser = async (req, res) => {
-    const { name,score } = req.body
+    const { name } = req.body
+    const score = req.cookies['trex-high-score'] || "0";
 
     try{
         const user = await UserModel.create({name,score})

@@ -3,6 +3,8 @@ const express = require('express');
 const userRoutes = require('./routes/users');
 const mongoose = require('mongoose');
 const cors = require("cors");
+const cookieParser = require('cookie-parser')
+
 
 const allowedOrigins = [process.env.FRONT_END_URL];
 //express app
@@ -11,6 +13,7 @@ const app = express();
 // this line is so Express can parse JSON bodies - so when a post method is done and 
 // req.body is needed the json can be parsed and the values can be taken
 app.use(express.json());
+app.use(cookieParser()); // <-- this line makes cookies available on req.cookies
 
 
 app.use((req, res, next) => {

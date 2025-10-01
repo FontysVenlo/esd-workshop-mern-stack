@@ -37,11 +37,29 @@ export const checkCollision = (trex: TRexHitbox, obstacle: Obstacle): boolean =>
          trex.y + trex.height > obstacle.y;
 };
 
+// --- Utility to set a cookie ---
+const setCookie = (name: string, value: string, days: number) => {
+  const expires = new Date();
+  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000); // days → ms
+  document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/`;
+};
+
+// --- Utility to get a cookie ---
+const getCookie = (name: string): string | null => {
+  const cookies = document.cookie.split(';').map(c => c.trim());
+  for (const cookie of cookies) {
+    if (cookie.startsWith(name + "=")) {
+      return decodeURIComponent(cookie.substring(name.length + 1));
+    }
+  }
+  return null;
+};
+
+// --- Your score functions ---
 export const getHighScore = (): number => {
-  return parseInt(localStorage.getItem('trex-high-score') || '0');
+  return parseInt(getCookie('trex-high-score') || '0');
 };
 
 export const saveHighScore = (score: number): void => {
-  localStorage.setItem('trex-high-score', score.toString());
-  
+  setCookie('trex-high-score', score.toString(), 1); 
 };
