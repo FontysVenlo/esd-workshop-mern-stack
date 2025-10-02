@@ -15,7 +15,9 @@ import { chromeSprites } from '../../config/spriteConfigs'; // Import your chose
 const TRexGame: React.FC = () => {
   const [spritesLoaded, setSpritesLoaded] = useState(false);
   const dataFromCookies = getCookieData('trex-high-score');
-  const highScore = dataFromCookies.get("trex-high-score") ?? "0";
+  const highScore = dataFromCookies.get("trex-high-score") ?? 0;
+
+
 
 
 
@@ -47,7 +49,7 @@ const TRexGame: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>({
     state: 'WAITING',
     score: 0,
-    highScore: parseInt(highScore),
+    highScore: parseInt(highScore.toString()),
     speed: INITIAL_SPEED,
     trexY: GROUND_Y - TREX_HEIGHT,
     trexVelocityY: 0,
@@ -83,6 +85,7 @@ const TRexGame: React.FC = () => {
 
   const restartGame = useCallback(() => {
     startGame();
+      console.log(dataFromCookies)
   }, [startGame]);
 
   const jump = useCallback(() => {

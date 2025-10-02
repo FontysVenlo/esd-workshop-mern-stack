@@ -99,15 +99,19 @@ export const useGameLoop = ({
       for (const obstacle of newState.obstacles) {
         if (checkCollision(trexHitbox, obstacle)) {
           newState.state = 'GAME_OVER';
+             console.log(newState.score + "+" + newState.highScore)
           if (newState.score > newState.highScore) {
             newState.highScore = newState.score;
             saveToCookies('trex-high-score', newState.score);
+         
             const dataFromCookies = getCookieData('player-name', 'trex-high-score');
             // Extract values
             const playerName = dataFromCookies.get("player-name") ?? "";
             const highScore = dataFromCookies.get("trex-high-score") ?? "0";
 
             sendUserData(api, playerName,highScore)
+          }else{
+            saveToCookies('trex-high-score', newState.score);
           }
           break;
         }
