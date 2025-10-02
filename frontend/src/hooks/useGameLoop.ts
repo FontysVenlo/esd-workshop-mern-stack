@@ -22,6 +22,7 @@ interface UseGameLoopProps {
   trexSprite: TRexSprite;
   setGameState: React.Dispatch<React.SetStateAction<GameState>>;
   setTrexSprite: React.Dispatch<React.SetStateAction<TRexSprite>>;
+  showHitboxes?: boolean;
 }
 
 export const useGameLoop = ({
@@ -29,7 +30,8 @@ export const useGameLoop = ({
   gameState,
   trexSprite,
   setGameState,
-  setTrexSprite
+  setTrexSprite,
+  showHitboxes
 }: UseGameLoopProps) => {
   const animationIdRef = useRef<number | null>(null);
 
@@ -146,8 +148,9 @@ export const useGameLoop = ({
     
     drawTRex(ctx, TREX_X, trexY, trexSprite, gameState.isDucking);
     drawUI(ctx, gameState.score, gameState.highScore, gameState.state);
-    // Add this line after drawUI call
-    // drawHitboxes(ctx, trexHitbox, gameState.obstacles);
+    if (showHitboxes) {
+      drawHitboxes(ctx, trexHitbox, gameState.obstacles);
+    }
 
     if (gameState.state === 'PLAYING') {
       animationIdRef.current = requestAnimationFrame(gameLoop);

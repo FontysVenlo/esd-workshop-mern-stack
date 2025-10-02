@@ -8,13 +8,15 @@ interface GameCanvasProps {
   trexSprite: TRexSprite;
   setGameState: React.Dispatch<React.SetStateAction<GameState>>;
   setTrexSprite: React.Dispatch<React.SetStateAction<TRexSprite>>;
+  showHitboxes?: boolean;
 }
 
 const GameCanvas: React.FC<GameCanvasProps> = ({
   gameState,
   trexSprite,
   setGameState,
-  setTrexSprite
+  setTrexSprite,
+  showHitboxes
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { startGameLoop, stopGameLoop } = useGameLoop({
@@ -22,7 +24,8 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
     gameState,
     trexSprite,
     setGameState,
-    setTrexSprite
+    setTrexSprite,
+    showHitboxes: !!showHitboxes
   });
 
   useEffect(() => {
