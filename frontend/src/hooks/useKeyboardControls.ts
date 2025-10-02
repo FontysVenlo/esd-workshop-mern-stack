@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { GameState } from '../types/gameTypes';
 
 interface UseKeyboardControlsProps {
@@ -16,8 +16,12 @@ export const useKeyboardControls = ({
   onStart,
   onRestart
 }: UseKeyboardControlsProps): void => {
+  const pressedRef = useRef<Set<string>>(new Set());
   useEffect(() => {
+    
+
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.repeat) return; // ignore key auto-repeat
       switch (event.code) {
         case 'Space':
         case 'ArrowUp':
@@ -33,7 +37,10 @@ export const useKeyboardControls = ({
         case 'ArrowDown':
           event.preventDefault();
           if (gameState === 'PLAYING') {
-            onDuck(true);
+            if (!pressedRef.current.has('ArrowDown')) {
+              onDuck(true);
+            }
+            pressedRef.current.add('ArrowDown');
           }
           break;
       }
@@ -44,7 +51,10 @@ export const useKeyboardControls = ({
         case 'ArrowDown':
           event.preventDefault();
           if (gameState === 'PLAYING') {
-            onDuck(false);
+            pressedRef.current.delete('ArrowDown');
+            if (!pressedRef.current.has('ArrowDown')) {
+              onDuck(false);
+            }
           }
           break;
       }

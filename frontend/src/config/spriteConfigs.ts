@@ -2,26 +2,24 @@ import { SpriteSheetConfig } from '../types/spriteTypes';
 
 // Default Chrome T-Rex sprite sheet configuration
 export const chromeSprites: SpriteSheetConfig = {
-  imagePath: '/sprites/trex-sprite.png',
+  imagePath: '/sprites/100-offline-sprite.png',
   frames: {
-    // T-Rex animations (example coordinates - adjust to your sprite sheet)
-    trexIdle: { x: 44, y: 2, width: 44, height: 47 },
-    trexRun1: { x: 132, y: 2, width: 44, height: 47 },
-    trexRun2: { x: 176, y: 2, width: 44, height: 47 },
-    trexJump: { x: 44, y: 2, width: 44, height: 47 }, // same as idle/run frame
-    trexDuck1: { x: 220, y: 30, width: 59, height: 30 },
-    trexDuck2: { x: 279, y: 30, width: 59, height: 30 },
-    trexDead: { x: 220, y: 2, width: 44, height: 47 },
-    
+      // T-Rex Sprites
+    trexIdle: { x: 848, y: 2, width: 44, height: 51 },
+    trexRun1: { x: 935, y: -2, width: 46, height: 51 },
+    trexRun2: { x: 980, y: -2, width: 46, height: 51 },
+    trexJump: { x: 848, y: 2, width: 44, height: 51 },
+    trexDuck1: { x: 1113, y: 12, width: 59, height: 32 },
+    trexDuck2: { x: 1173, y: 12, width: 59, height: 32 },
+    trexDead: { x: 294, y: 2, width: 44, height: 47 },
+
     // Obstacles
-    cactusSmall: { x: 446, y: 2, width: 17, height: 35 },
-    cactusMedium: { x: 463, y: 2, width: 34, height: 35 },
-    cactusLarge: { x: 497, y: 2, width: 51, height: 35 },
-    pterodactyl1: { x: 134, y: 75, width: 46, height: 40 },
-    pterodactyl2: { x: 180, y: 75, width: 46, height: 40 },
+    cactusSmall: { x: 230, y: 0, width: 12, height: 35 },
+    cactusMedium: { x: 228, y: 2, width: 34, height: 35 },
+    cactusLarge: { x: 228, y: 2, width: 51, height: 35 },
+    pterodactyl1: { x: 135, y: 2, width: 46, height: 40 },
+    pterodactyl2: { x: 180, y: 2, width: 46, height: 40 },
 
-
-    
     // Environment
     ground: { x: 2, y: 54, width: 1200, height: 12 },
     cloud: { x: 86, y: 2, width: 46, height: 14 },
@@ -70,4 +68,28 @@ export const pixelSprites: SpriteSheetConfig = {
     gameOver: { x: 270, y: 50, width: 200, height: 12 },
     restart: { x: 470, y: 50, width: 40, height: 36 }
   }
+};
+
+
+// Sprite configuration
+const SPRITES = {
+    trex: {
+        idle: 'assets/trex-idle.png',
+        run1: 'assets/trex-run1.png', 
+        run2: 'assets/trex-run2.png',
+        duck1: 'assets/trex-duck1.png',
+        duck2: 'assets/trex-duck2.png',
+        dead: 'assets/trex-dead.png'
+    },
+    obstacles: {
+        cactusSmall: 'assets/cactus-small.png',
+        cactusMedium: 'assets/cactus-medium.png', 
+        cactusLarge: 'assets/cactus-large.png',
+        pterodactyl1: 'assets/pterodactyl1.png',
+        pterodactyl2: 'assets/pterodactyl2.png'
+    },
+    environment: {
+        ground: 'assets/ground.png',
+        cloud: 'assets/cloud.png'
+    }
 };

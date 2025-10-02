@@ -1,6 +1,6 @@
 import { spriteManager } from './spriteManager';
 import { Obstacle, TRexSprite, GameState } from '../types/gameTypes';
-import { CANVAS_WIDTH, CANVAS_HEIGHT, GROUND_Y, TREX_WIDTH, TREX_HEIGHT } from '../constants/gameConstants';
+import { CANVAS_WIDTH, CANVAS_HEIGHT, GROUND_Y, TREX_WIDTH, TREX_HEIGHT, TREX_DUCKING_HEIGHT, TREX_DUCKING_WIDTH } from '../constants/gameConstants';
 
 export const drawTRex = (
   ctx: CanvasRenderingContext2D, 
@@ -24,13 +24,15 @@ export const drawTRex = (
   }
 
   // Try to draw sprite, fallback to rectangle if it fails
-  if (!spriteManager.drawSprite(ctx, spriteName, x, y, TREX_WIDTH, TREX_HEIGHT)) {
-    // Fallback to rectangles
+  const destHeight = isDucking ? TREX_DUCKING_HEIGHT : TREX_HEIGHT;
+  const destWidth = isDucking ? TREX_DUCKING_WIDTH : TREX_WIDTH;
+  if (!spriteManager.drawSprite(ctx, spriteName, x, y, destWidth, destHeight)) {
+    // Fallback to rectangles was 17
     ctx.fillStyle = '#000000';
     if (isDucking) {
-      ctx.fillRect(x, y + 17, TREX_WIDTH, 30);
+      ctx.fillRect(x, y + 17, destWidth, TREX_DUCKING_HEIGHT);
     } else {
-      ctx.fillRect(x, y, TREX_WIDTH, TREX_HEIGHT);
+      ctx.fillRect(x, y, destWidth, TREX_HEIGHT);
     }
   }
 };
@@ -68,6 +70,9 @@ export const drawGround = (ctx: CanvasRenderingContext2D, groundX: number): void
       for (let x = groundX % groundFrame.width; x < CANVAS_WIDTH; x += groundFrame.width) {
         spriteManager.drawSprite(ctx, 'ground', x, GROUND_Y - 2, groundFrame.width, 12);
       }
+      // Overlay a crisp baseline to ensure visual alignment
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, GROUND_Y, CANVAS_WIDTH, 2);
       return;
     }
   }
