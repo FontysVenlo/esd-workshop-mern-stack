@@ -112,7 +112,6 @@ export const useGameLoop = ({
       for (const obstacle of newState.obstacles) {
         if (checkCollision(trexHitbox, obstacle)) {
           newState.state = 'GAME_OVER';
-             console.log(newState.score + "+" + newState.highScore)
           if (newState.score > newState.highScore) {
             newState.highScore = newState.score;
             saveToCookies('trex-high-score', newState.score);

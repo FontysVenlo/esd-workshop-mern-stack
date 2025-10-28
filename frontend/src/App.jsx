@@ -1,24 +1,38 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
-// In your main App.tsx or wherever you want to use it
 import TRexGame from './components/TRexGame';
 import { saveToCookies } from './utils/gameUtils';
 
 function App() {
   const [name, setName] = useState("");
 
-  const api = import.meta.env.VITE_BACKEND_URL;
-
   const handleClick = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
+    const userInput = window.prompt("Please enter your name!:");
+    const trimmed = userInput ? userInput.trim() : "";
 
-    const userInput = window.prompt("Please enter your name:");
-
-    if (userInput !== null) {
-      saveToCookies('player-name',userInput )
-      setName(userInput);
+    if (trimmed) {
+      saveToCookies("player-name", trimmed);
+      setName(trimmed);
+    } else {
+      alert("Name cannot be empty.");
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!name.trim()) {
+
+        if (e.code === "Space" || e.code === "Enter") {
+          handleClick(e);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [name]);
+
   return (
     <div className="App">
 

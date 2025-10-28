@@ -18,8 +18,6 @@ const TRexGame: React.FC = () => {
   const highScore = dataFromCookies.get("trex-high-score") ?? 0;
 
 
-
-
   const [showHitboxes, setShowHitboxes] = useState(false);
 
   useEffect(() => {
@@ -86,7 +84,6 @@ const TRexGame: React.FC = () => {
 
   const restartGame = useCallback(() => {
     startGame();
-      console.log(dataFromCookies)
   }, [startGame]);
 
   const jump = useCallback(() => {
