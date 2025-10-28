@@ -35,8 +35,6 @@ function App() {
 
   return (
     <div className="App">
-
-      <button onClick={handleClick}>Ask for name</button>
       {name && <p>You entered: {name}</p>}
       <TRexGame />
     </div>
