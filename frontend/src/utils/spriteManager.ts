@@ -69,4 +69,61 @@ class SpriteManager {
   }
 }
 
+//indiviudal sprite
+
+// class SpriteManager {
+//   private sprites: Record<string, HTMLImageElement> = {};
+
+//   async loadSprite(name: string, src: string): Promise<void> {
+//     return new Promise((resolve, reject) => {
+//       const img = new Image();
+      
+//       img.onload = () => {
+//         this.sprites[name] = img;
+//         resolve();
+//       };
+      
+//       img.onerror = () => {
+//         reject(new Error(`Failed to load sprite: ${src}`));
+//       };
+      
+//       img.src = src;
+//     });
+//   }
+
+//   drawSprite(
+//     ctx: CanvasRenderingContext2D,
+//     name: string,
+//     x: number,
+//     y: number,
+//     width?: number,
+//     height?: number
+//   ): boolean {
+//     const sprite = this.sprites[name];
+//     if (!sprite) {
+//       console.warn(`Sprite "${name}" not found`);
+//       return false;
+//     }
+
+//     ctx.drawImage(
+//       sprite,
+//       x, y,
+//       width ?? sprite.width,
+//       height ?? sprite.height
+//     );
+
+//     return true;
+//   }
+
+//   isLoaded(name?: string): boolean {
+//     if (name) return !!this.sprites[name];
+//     return Object.keys(this.sprites).length > 0;
+//   }
+
+//   getSprite(name: string): HTMLImageElement | null {
+//     return this.sprites[name] ?? null;
+//   }
+// }
+
 export const spriteManager = new SpriteManager();
+

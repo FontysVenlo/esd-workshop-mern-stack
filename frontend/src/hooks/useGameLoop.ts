@@ -1,14 +1,15 @@
 import { useCallback, useRef } from 'react';
 import { GameState, TRexSprite } from '../types/gameTypes';
-import {
-  GROUND_Y,
-  TREX_HEIGHT,
-  TREX_DUCKING_HEIGHT,
-  TREX_X,
-  GRAVITY,
-  SPEED_INCREMENT,
-  OBSTACLE_SPAWN_RATE,
-  TREX_WIDTH
+import { 
+  GROUND_Y, 
+  TREX_HEIGHT, 
+  TREX_DUCKING_HEIGHT, 
+  TREX_DUCKING_WIDTH,
+  TREX_X, 
+  GRAVITY, 
+  SPEED_INCREMENT, 
+  OBSTACLE_SPAWN_RATE, 
+  TREX_WIDTH 
 } from '../constants/gameConstants';
 import { generateObstacle, checkCollision, saveToCookies, getCookieData } from '../utils/gameUtils';
 import { drawTRex, drawObstacle, drawGround, drawUI, drawHitboxes } from '../utils/drawingUtils';
@@ -22,6 +23,7 @@ interface UseGameLoopProps {
   trexSprite: TRexSprite;
   setGameState: React.Dispatch<React.SetStateAction<GameState>>;
   setTrexSprite: React.Dispatch<React.SetStateAction<TRexSprite>>;
+  showHitboxes?: boolean;
 }
 
 export const useGameLoop = ({
@@ -29,7 +31,8 @@ export const useGameLoop = ({
   gameState,
   trexSprite,
   setGameState,
-  setTrexSprite
+  setTrexSprite,
+  showHitboxes
 }: UseGameLoopProps) => {
   const animationIdRef = useRef<number | null>(null);
   const api = import.meta.env.VITE_BACKEND_URL;
@@ -41,12 +44,22 @@ export const useGameLoop = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Calculate trexHitbox before using it
+    // Calculate trexHitbox bottom-aligned to sprite so it's closer to ground
+    const spriteTopY = gameState.isDucking
+      ? gameState.trexY + (TREX_HEIGHT - TREX_DUCKING_HEIGHT)
+      : gameState.trexY;
+    const spriteHeight = gameState.isDucking ? TREX_DUCKING_HEIGHT : TREX_HEIGHT;
+    const spriteWidth = gameState.isDucking ? TREX_DUCKING_WIDTH : TREX_WIDTH;
+    const hitboxWidth = spriteWidth - 16;
+    const hitboxHeight = gameState.isDucking ? TREX_DUCKING_HEIGHT - 8 : TREX_HEIGHT - 12;
+    const hitboxX = TREX_X + 8;
+    const hitboxY = spriteTopY + spriteHeight - hitboxHeight;
+
     const trexHitbox = {
-      x: TREX_X + 8,
-      y: gameState.trexY + (gameState.isDucking ? 25 : 8),
-      width: TREX_WIDTH - 16,
-      height: gameState.isDucking ? TREX_DUCKING_HEIGHT - 10 : TREX_HEIGHT - 16
+      x: hitboxX,
+      y: hitboxY,
+      width: hitboxWidth,
+      height: hitboxHeight
     };
 
 
@@ -147,8 +160,9 @@ export const useGameLoop = ({
 
     drawTRex(ctx, TREX_X, trexY, trexSprite, gameState.isDucking);
     drawUI(ctx, gameState.score, gameState.highScore, gameState.state);
-    // Add this line after drawUI call
-    drawHitboxes(ctx, trexHitbox, gameState.obstacles);
+    if (showHitboxes) {
+      drawHitboxes(ctx, trexHitbox, gameState.obstacles);
+    }
 
     if (gameState.state === 'PLAYING') {
       animationIdRef.current = requestAnimationFrame(gameLoop);

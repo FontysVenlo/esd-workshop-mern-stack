@@ -20,6 +20,7 @@ const TRexGame: React.FC = () => {
 
 
 
+  const [showHitboxes, setShowHitboxes] = useState(false);
 
   useEffect(() => {
     const loadSprites = async () => {
@@ -129,12 +130,19 @@ const TRexGame: React.FC = () => {
           trexSprite={trexSprite}
           setGameState={setGameState}
           setTrexSprite={setTrexSprite}
+          showHitboxes={showHitboxes}
         />
       </div>
 
       <div className="mt-4 text-center text-sm text-gray-600">
         <p>Score: {gameState.score} | High Score: {gameState.highScore}</p>
         <p className="mt-1">Game State: {gameState.state}</p>
+        <button
+          className="mt-2 px-3 py-1 border rounded text-gray-800 hover:bg-gray-100"
+          onClick={() => setShowHitboxes(v => !v)}
+        >
+          {showHitboxes ? 'Hide' : 'Show'} Collision Boxes
+        </button>
       </div>
     </div>
   );
