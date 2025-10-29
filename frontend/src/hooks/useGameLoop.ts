@@ -122,7 +122,6 @@ export const useGameLoop = ({
             if (!playerName?.trim()) {
               window.location.reload();
             } else {
-              console.log("ye")
               sendUserData(api, playerName, highScore)
             }
 
@@ -181,12 +180,12 @@ export const useGameLoop = ({
         body: JSON.stringify({ name: playerName, score: score })
       });
 
-      const json = await response.json();
+      const json = await response.json()
 
       if (!response.ok) {
         console.error("Failed to save user:", json.error);
       } else {
-        console.log("User saved successfully:", json.user);
+        console.log("User saved successfully:", json.user ?? json.newUser);
       }
     } catch (err) {
       console.error("Error sending user data:", err);

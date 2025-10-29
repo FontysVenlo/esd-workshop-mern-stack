@@ -3,8 +3,6 @@ import { io } from 'socket.io-client';
 let socket;
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
-console.log("VITE_BACKEND_URL =", import.meta.env.VITE_BACKEND_URL);
-
 const initSocket = () => {
     if (!socket) {
         // Initialize the WebSocket connection with autoConnect disabled

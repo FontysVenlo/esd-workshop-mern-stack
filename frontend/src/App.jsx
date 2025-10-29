@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import TRexGame from './components/TRexGame';
 import { saveToCookies, getCookieData } from './utils/gameUtils';
@@ -15,6 +15,7 @@ function App() {
   const highScore = Number(rawScore) || 0;
 
   const rawName = dataFromCookiesForName.get("player-name") ?? "No Name - Enter A name to Play";
+
 
 
 
@@ -51,7 +52,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<TRexGame score={highScore} playerName={rawName} />} />
-          <Route path="/dashboard" element={<DashBoard players={[{ name: "Alice", score: 10 }, { name: "Bob", score: 8 }]}/>} />
+          <Route path="/dashboard" element={<DashBoard players={[{ name: "Alice", score: 10 }, { name: "Bob", score: 8 }]} />} />
         </Routes>
       </BrowserRouter>
     </div>

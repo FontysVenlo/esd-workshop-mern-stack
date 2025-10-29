@@ -1,9 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import initSocket from "../../context/socket";
 
 const DashBoard = () => {
     const api = import.meta.env.VITE_BACKEND_URL;
     const [players, setPlayers] = useState([]);
+    const socketRef = useRef();
+
+    if (!socketRef.current) {
+        socketRef.current = initSocket();
+    }
+    const socket = socketRef.current;
 
 
     const getAllPlayers = async (e) => {
@@ -15,7 +21,7 @@ const DashBoard = () => {
             });
 
             const dataFromResponce = await response.json();
-            
+
             if (!response.ok) {
                 console.log("No Users yet")
                 return;
@@ -32,7 +38,22 @@ const DashBoard = () => {
 
     useEffect(() => {
         getAllPlayers()
-        const socket = initSocket();
+    }, [api])
+
+    useEffect(() => {
+
+        if (!socket.connected) {
+            socket.connect();
+        }
+
+        const onList = (list) => setPlayers(list);
+        socket.on("newPlayers", onList);
+        console.log(onList)
+
+        return () => {
+            socket.off("newPlayers",onList);
+        };
+
     }, [])
 
     return (

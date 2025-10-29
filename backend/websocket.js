@@ -16,7 +16,7 @@ function setupWebSocket(server) {
         socket.on('disconnect', () => {
             console.log(`User back-end disconnected: ${socket.id}`);
         });
-        
+
     })
     return io; // <-- must return this
 }
