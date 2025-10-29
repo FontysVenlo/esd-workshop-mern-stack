@@ -4,7 +4,7 @@ require('dotenv').config()
 function setupWebSocket(server) {
     const io = new Server(server, {
         cors: {
-            origin: `${process.env.FRONT_END_URL}`,
+            origin: process.env.FRONT_END_URL,
             methods: ["GET", "POST"],
             credentials: true, // Enable credentials (cookies, authorization headers)
         }
@@ -16,9 +16,9 @@ function setupWebSocket(server) {
         socket.on('disconnect', () => {
             console.log(`User back-end disconnected: ${socket.id}`);
         });
+        
     })
-
-
+    return io; // <-- must return this
 }
 
 module.exports = setupWebSocket;

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import TRexGame from './components/TRexGame';
 import { saveToCookies, getCookieData } from './utils/gameUtils';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import DashBoard from './components/TRexGame/DashBoard';
 
 
 function App() {
@@ -12,7 +14,7 @@ function App() {
   const rawScore = dataFromCookiesForScore.get("trex-high-score");
   const highScore = Number(rawScore) || 0;
 
- const rawName = dataFromCookiesForName.get("player-name") ?? "No Name - Enter A name to Play";
+  const rawName = dataFromCookiesForName.get("player-name") ?? "No Name - Enter A name to Play";
 
 
 
@@ -46,8 +48,12 @@ function App() {
 
   return (
     <div className="App">
-      {name && <p>You entered: {name}</p>}
-      <TRexGame score={highScore} playerName={rawName} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<TRexGame score={highScore} playerName={rawName} />} />
+          <Route path="/dashboard" element={<DashBoard players={[{ name: "Alice", score: 10 }, { name: "Bob", score: 8 }]}/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

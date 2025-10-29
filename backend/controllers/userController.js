@@ -1,7 +1,12 @@
 const UserModel = require('../models/UserModel')
 
-const getUser = async (req, res) => {
-    res.status(200).json({ message: "coll!" })
+const getAllUser = async (req, res) => {
+    try {
+        const users = await UserModel.find();
+        res.status(200).json({ users })
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
 const setUser = async (req, res) => {
@@ -28,6 +33,6 @@ const setUser = async (req, res) => {
 }
 
 module.exports = {
-    getUser,
+    getAllUser,
     setUser
 }

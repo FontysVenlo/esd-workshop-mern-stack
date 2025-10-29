@@ -1,10 +1,10 @@
 const express = require('express')
 
-const router = express.Router()   
+const router = express.Router()
 
-const {getUser,setUser} = require("../controllers/userController")
+const { getAllUser, setUser } = require("../controllers/userController")
 
-router.get('/get-user', getUser)
+router.get('/get-user-all', getAllUser)
 
 router.post('/set-user', setUser)
 

@@ -11,9 +11,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +24,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -39,4 +42,55 @@
 
 .read-the-docs {
   color: #888;
+}
+
+
+
+.dashboard {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  padding: 16px;
+}
+
+.title {
+  color: #3a3a3a;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.player-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2a2a2a;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.player-item:hover {
+  background-color: #3a3a3a;
+}
+
+.player-name {
+  font-weight: 500;
+}
+
+.player-score {
+  font-weight: 700;
+  font-size: 1.1rem;
 }

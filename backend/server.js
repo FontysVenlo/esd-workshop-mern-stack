@@ -34,6 +34,7 @@ app.use(cors({
 
 }));
 
+
 // Handle preflight requests
 // app.options('/.*', cors());
 
@@ -47,6 +48,9 @@ const io = setupWebSocket(httpServer)
 
 app.set('socketio', io);
 
+
+console.log("FRONT_END_URL =", process.env.FRONT_END_URL);
+console.log("BACKEND_PORT  =", process.env.BACKEND_PORT);
 
 
 mongoose.connect(process.env.MONGO_DB_URL).then(() => {
