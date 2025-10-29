@@ -2,7 +2,7 @@ const UserModel = require('../models/UserModel')
 
 const getAllUser = async (req, res) => {
     try {
-        const users = await UserModel.find();
+        const users = await UserModel.find().sort({score: -1});
         res.status(200).json({ users })
     } catch (error) {
         res.status(400).json({ error: error.message })
