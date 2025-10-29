@@ -1,15 +1,15 @@
 import { useCallback, useRef } from 'react';
 import { GameState, TRexSprite } from '../types/gameTypes';
-import { 
-  GROUND_Y, 
-  TREX_HEIGHT, 
-  TREX_DUCKING_HEIGHT, 
+import {
+  GROUND_Y,
+  TREX_HEIGHT,
+  TREX_DUCKING_HEIGHT,
   TREX_DUCKING_WIDTH,
-  TREX_X, 
-  GRAVITY, 
-  SPEED_INCREMENT, 
-  OBSTACLE_SPAWN_RATE, 
-  TREX_WIDTH 
+  TREX_X,
+  GRAVITY,
+  SPEED_INCREMENT,
+  OBSTACLE_SPAWN_RATE,
+  TREX_WIDTH
 } from '../constants/gameConstants';
 import { generateObstacle, checkCollision, saveToCookies, getCookieData } from '../utils/gameUtils';
 import { drawTRex, drawObstacle, drawGround, drawUI, drawHitboxes } from '../utils/drawingUtils';
@@ -115,14 +115,18 @@ export const useGameLoop = ({
           if (newState.score > newState.highScore) {
             newState.highScore = newState.score;
             saveToCookies('trex-high-score', newState.score);
-         
-            const dataFromCookies = getCookieData('player-name', 'trex-high-score');
-            // Extract values
-            const playerName = dataFromCookies.get("player-name") ?? "";
-            const highScore = dataFromCookies.get("trex-high-score") ?? "0";
 
-            sendUserData(api, playerName,highScore)
-          }else{
+            const dataFromCookies = getCookieData('player-name', 'trex-high-score');
+            const playerName = dataFromCookies.get("player-name")
+            const highScore = dataFromCookies.get("trex-high-score") ?? "0";
+            if (!playerName?.trim()) {
+              window.location.reload();
+            } else {
+              console.log("ye")
+              sendUserData(api, playerName, highScore)
+            }
+
+          } else {
             saveToCookies('trex-high-score', newState.score);
           }
           break;
@@ -174,7 +178,7 @@ export const useGameLoop = ({
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: playerName, score:score })
+        body: JSON.stringify({ name: playerName, score: score })
       });
 
       const json = await response.json();

@@ -44,17 +44,6 @@ const setCookie = (name: string, value: string, days: number) => {
   document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/`;
 };
 
-// --- Utility to get a cookie ---
-const getCookie = (name: string): string | null => {
-  const cookies = document.cookie.split(';').map(c => c.trim());
-  for (const cookie of cookies) {
-    if (cookie.startsWith(name + "=")) {
-      return decodeURIComponent(cookie.substring(name.length + 1));
-    }
-  }
-  return null;
-};
-
 // --- Dynamic multi-cookie getter ---
 export const getCookieData = (...names: string[]): Map<string, string> => {
   const map = new Map<string, string>();

@@ -1,10 +1,21 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import TRexGame from './components/TRexGame';
-import { saveToCookies } from './utils/gameUtils';
+import { saveToCookies, getCookieData } from './utils/gameUtils';
+
 
 function App() {
   const [name, setName] = useState("");
+  const dataFromCookiesForScore = getCookieData('trex-high-score');
+  const dataFromCookiesForName = getCookieData('player-name');
+
+  const rawScore = dataFromCookiesForScore.get("trex-high-score");
+  const highScore = Number(rawScore) || 0;
+
+ const rawName = dataFromCookiesForName.get("player-name") ?? "No Name - Enter A name to Play";
+
+
+
 
   const handleClick = async (e) => {
     if (e) e.preventDefault();
@@ -21,7 +32,7 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (!name.trim()) {
+      if (!rawName.trim()) {
 
         if (e.code === "Space" || e.code === "Enter") {
           handleClick(e);
@@ -31,12 +42,12 @@ function App() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [name]);
+  }, [rawName, name]);
 
   return (
     <div className="App">
       {name && <p>You entered: {name}</p>}
-      <TRexGame />
+      <TRexGame score={highScore} playerName={rawName} />
     </div>
   );
 }

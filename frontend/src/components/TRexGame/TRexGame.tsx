@@ -8,17 +8,20 @@ import {
   TREX_HEIGHT,
   JUMP_VELOCITY
 } from '../../constants/gameConstants';
-import { getCookieData } from '../../utils/gameUtils';
 import { spriteManager } from '../../utils/spriteManager';
 import { chromeSprites } from '../../config/spriteConfigs'; // Import your chosen config
 
-const TRexGame: React.FC = () => {
-  const [spritesLoaded, setSpritesLoaded] = useState(false);
-  const dataFromCookies = getCookieData('trex-high-score');
-  const highScore = dataFromCookies.get("trex-high-score") ?? 0;
+//! a prop type: To allow a string or anything else 
+type TRexGameProps = {
+  score: string;
+  playerName: string;
+};
 
+const TRexGame: React.FC<TRexGameProps> = ({score,playerName}) => {
+  const [spritesLoaded, setSpritesLoaded] = useState(false);
 
   const [showHitboxes, setShowHitboxes] = useState(false);
+
 
   useEffect(() => {
     const loadSprites = async () => {
@@ -48,7 +51,7 @@ const TRexGame: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>({
     state: 'WAITING',
     score: 0,
-    highScore: parseInt(highScore.toString()),
+    highScore: parseInt(score),
     speed: INITIAL_SPEED,
     trexY: GROUND_Y - TREX_HEIGHT,
     trexVelocityY: 0,
@@ -132,7 +135,7 @@ const TRexGame: React.FC = () => {
       </div>
 
       <div className="mt-4 text-center text-sm text-gray-600">
-        <p>Score: {gameState.score} | High Score: {gameState.highScore}</p>
+        <p>Score: {gameState.score} | High Score: {gameState.highScore} | Player: {playerName}</p>
         <p className="mt-1">Game State: {gameState.state}</p>
         <button
           className="mt-2 px-3 py-1 border rounded text-gray-800 hover:bg-gray-100"
