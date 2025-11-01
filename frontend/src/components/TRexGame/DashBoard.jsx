@@ -56,22 +56,33 @@ const DashBoard = () => {
     }, [])
 
     return (
-        <div className="dashboard max-w-4xl mx-auto p-6 bg-gray-700 text-gray-100 rounded-xl">
+        <div className="dashboard max-w-4xl mx-auto p-6 bg-gray-700 text-gray-100 rounded-xl bg-">
             <h2 className="title text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">
                 Scoreboard
             </h2>
             <ul className="player-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                {players.map((player) => (
-                    <li
-                        key={player._id}
-                        className="player-item flex flex-col items-center justify-center bg-gray-800 rounded-lg p-4 hover:bg-gray-500 transition"
-                    >
-                        <span className="player-name text-lg font-medium">{player.name}</span>
-                        <span className="player-score text-sm text-gray-400 mt-1">
-                            {player.score}
-                        </span>
-                    </li>
-                ))}
+                {players
+                    .sort((a, b) => b.score - a.score)
+                    .map((player, i) => {
+                        const color =
+                            i === 0
+                                ? "bg-yellow-300 text-black"
+                                : i === 1
+                                    ? "bg-gray-200 text-black"
+                                    : i === 2
+                                        ? "bg-amber-800 text-white"
+                                        : "bg-gray-800 text-gray-100 hover:bg-gray-400";
+
+                        return (
+                            <li
+                                key={player._id}
+                                className={`player-item flex flex-col items-center justify-center rounded-lg p-4 transition ${color}`}
+                            >
+                                <span className="player-name text-lg font-semibold">{player.name}</span>
+                                <span className="player-score text-sm mt-1">{player.score}</span>
+                            </li>
+                        );
+                    })}
             </ul>
         </div>
 
