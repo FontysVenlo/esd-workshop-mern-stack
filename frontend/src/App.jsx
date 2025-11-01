@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import './App.css'
+import './App.css' 
 import TRexGame from './components/TRexGame';
 import { saveToCookies, getCookieData } from './utils/gameUtils';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'

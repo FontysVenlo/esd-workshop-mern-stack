@@ -7,7 +7,6 @@ const initSocket = () => {
     if (!socket) {
         // Initialize the WebSocket connection with autoConnect disabled
         socket = io(`${apiUrl}`, {
-
             withCredentials: true, // must match backend CORS settings
         });
 
