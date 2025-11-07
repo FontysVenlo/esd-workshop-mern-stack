@@ -16,65 +16,38 @@ const getAllUser = async (req, res) => {
 }
 
 const setUser = async (req, res) => {
-     /**
-     * TODO: Create the logic to POST a user in MongoDB
-     * @const {name} - should be recived from the request body
-     * @const {score} - should be recived from the browser cookies
-     * 
-     * TODO-2: 
-     * TODO-bonus: Sort the data
-     */
-    // const { name } = req.body
-    // const score = req.cookies['trex-high-score'] || "0";
-    // const io = req.app.get("socketio");
-    // try {
+    const io = req.app.get("socketio");
+    /**
+    * TODO: Create the logic to POST a user in MongoDB
+    * TODO: After the POST pass the full list of users and scores to the websocket
+    * @const {name} - should be recived from the request body
+    * @const {score} - should be recived from the browser cookies
+    */
 
-    //     const user = await UserModel.findOne({ name });
+    // const { name } = req.body;
+    // const score = req.cookies['trex-high-score'] || "0";
+
+    // try {
+    //     let user = await UserModel.findOne({ name });
 
     //     if (user) {
     //         user.score = score;
     //         await user.save();
-
-    //         const list = await UserModel.find().sort({ score: -1 });
-    //         io.emit("newPlayers", list);
-    //         console.log(list)
-    //         console.log("11")
-    //         return res.status(200).json({ message: "User updated", user });
+    //     } else {
+    //         user = await UserModel.create({ name, score });
     //     }
 
-    //     const newUser = await UserModel.create({ name, score })
-    //     const list = await UserModel.find().sort({ score: -1 });
-    //     io.emit("newPlayers", list);
-    //     console.log(list)
-    //     res.status(200).json({ message: "User created", newUser })
+    //     const list = await UserModel.find().sort({ score: -1 }).lean();
 
-
+    //     const message = user && user._id ? (user.createdAt === user.updatedAt ? "User created" : "User updated") : "User saved";
+    //     return res.status(200).json({ message, user });
     // } catch (error) {
-    //     res.status(400).json({ error: error.message })
+    //     return res.status(400).json({ error: error.message });
     // }
 
-    const { name } = req.body;
-    const score = req.cookies['trex-high-score'] || "0";
-    const io = req.app.get("socketio");
 
-    try {
-        let user = await UserModel.findOne({ name });
+    io.emit("newPlayers", list);
 
-        if (user) {
-            user.score = score;
-            await user.save();
-        } else {
-            user = await UserModel.create({ name, score });
-        }
-
-        const list = await UserModel.find().sort({ score: -1 }).lean();
-        io.emit("newPlayers", list);
-
-        const message = user && user._id ? (user.createdAt === user.updatedAt ? "User created" : "User updated") : "User saved";
-        return res.status(200).json({ message, user });
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    }
 }
 
 module.exports = {
