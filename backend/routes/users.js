@@ -1,11 +1,14 @@
 const express = require('express')
-
 const router = express.Router()
 
-const { getAllUser, setUser } = require("../controllers/userController")
+/**
+ * TODO: Use the `router` to create custom routes with HTTP methods that use custom controllers
 
-router.get('/get-user-all', getAllUser)
+*/
+// const { getAllUser, setUser } = require("../controllers/userController")
 
-router.post('/set-user', setUser)
+// router.get('/get-user-all', getAllUser)
+
+// router.post('/set-user', setUser)
 
 module.exports = router

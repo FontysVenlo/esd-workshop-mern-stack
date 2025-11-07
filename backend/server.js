@@ -1,16 +1,16 @@
+const cookieParser = require('cookie-parser')
+const setupWebSocket = require('./websocket')
+
+
+
 require('dotenv').config()
 const express = require('express');
 const userRoutes = require('./routes/users');
-const mongoose = require('mongoose');
 const cors = require("cors");
-const cookieParser = require('cookie-parser')
-
-// Import WebSocket setup
-const setupWebSocket = require('./websocket')
 const http = require('http')
-
-
+const mongoose = require('mongoose');
 const allowedOrigins = [process.env.FRONT_END_URL];
+
 //express app
 const app = express();
 
@@ -34,19 +34,12 @@ app.use(cors({
 
 }));
 
-
-// Handle preflight requests
-// app.options('/.*', cors());
-
 app.use('/api/routes', userRoutes)
 
 // --- Create HTTP server and attach Socket.IO ---
+// app.listen(process.env.BACKEND_PORT);
 const httpServer = http.createServer(app);
 
-// Make `io` available to the rest of the app
-const io = setupWebSocket(httpServer)
-
-app.set('socketio', io);
 
 mongoose.connect(process.env.MONGO_DB_URL).then(() => {
   httpServer.listen(process.env.BACKEND_PORT, () => {
@@ -54,3 +47,10 @@ mongoose.connect(process.env.MONGO_DB_URL).then(() => {
   })
 }).catch((error) => { console.log(error) })
 
+
+
+
+// Make `io` available to the rest of the app
+const io = setupWebSocket(httpServer)
+
+app.set('socketio', io);
