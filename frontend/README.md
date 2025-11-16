@@ -53,7 +53,7 @@ frontend/
 
 ## Step-by-Step Workshop Segments
 
-### Task 0: React Hook Introduction ⏱️ ~5 minutes (Theory)
+### Task 0: React Hook Introduction 
 
 **📖 Read the theory guide:** [TASK_0_HOOKS_THEORY.md](./TASK_0_HOOKS_THEORY.md)
 
@@ -67,7 +67,7 @@ This theory section explains:
 
 ---
 
-### Task 1: Implement Keyboard Controls Hook ⏱️ ~8 minutes 
+### Task 1: Implement Keyboard Controls Hook 
 
 **File to open:** `src/hooks/useKeyboardControls.ts`
 
