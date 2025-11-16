@@ -193,7 +193,7 @@ export const useGameLoop = ({
       // if (!response.ok) {
       //   console.error("Failed to save user:", json.error);
       // } else {
-      //   console.log("User saved successfully:", json.user ?? json.newUser);
+      //   console.log("User saved successfully:", json.user);
       // }
     } catch (err) {
       console.error("Error sending user data:", err);
