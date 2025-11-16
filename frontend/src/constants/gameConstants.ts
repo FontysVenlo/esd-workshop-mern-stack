@@ -9,7 +9,7 @@ export const TREX_X = 50;
 export const GRAVITY = 0.6;
 export const JUMP_VELOCITY = -12;
 export const INITIAL_SPEED = 6;
-export const SPEED_INCREMENT = 0.0001 //had another 0;
+export const SPEED_INCREMENT = 0.001 //0.01 for speed mode;
 export const OBSTACLE_SPAWN_RATE = 0.008;
 export const MIN_OBSTACLE_DISTANCE = 120;
 
