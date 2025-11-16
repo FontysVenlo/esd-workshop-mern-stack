@@ -78,7 +78,7 @@ Steps:
      - Create and save new user in DB.
      - Return created user with proper HTTP status 200.
 2. In `userRoutes`:
-   - Add route `set-user`
+   - Add route `post-user`
 
 ---
 

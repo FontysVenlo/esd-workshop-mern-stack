@@ -173,7 +173,7 @@ export const useGameLoop = ({
 
   const sendUserData = async (api: string, playerName: string, score: string) => {
     try {
-      const response = await fetch(`${api}/api/routes/set-user`, {
+      const response = await fetch(`${api}/api/routes/users/post-user`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

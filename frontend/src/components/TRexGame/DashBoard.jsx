@@ -16,7 +16,7 @@ const DashBoard = () => {
     const getAllPlayers = async (e) => {
 
         try {
-            const response = await fetch(`${api}/api/routes/get-user-all`, {
+            const response = await fetch(`${api}/api/routes/users/get-user-all`, {
                 method: 'GET',
                 headers: { "Accept": "application/json" },
             });
