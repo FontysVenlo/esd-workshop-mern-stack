@@ -34,6 +34,14 @@ const DashBoard = () => {
         getAllPlayers()
     }, [api])
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            window.location.reload();
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
+
+
 
     return (
         <div className="dashboard max-w-4xl mx-auto p-6 bg-gray-700 text-gray-100 rounded-xl bg-">
@@ -41,14 +49,14 @@ const DashBoard = () => {
                 Scoreboard
             </h2>
             {
-                !players.length  ?(
+                !players.length ? (
                     <h1>
                         No players yet
                     </h1>
-                ):
-                (
-                    <br />
-                )
+                ) :
+                    (
+                        <br />
+                    )
             }
             <ul className="player-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {players
