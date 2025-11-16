@@ -1,6 +1,10 @@
 # Workshop Roadmap Backend: Simple API + Frontend Integration
 
-> Goal: Build a basic backend with `GET all` and `POST` routes, test them with Postman, then connect them to the frontend via `useGameLoop.ts` (`sendUserData`).
+> Goal: Build a basic backend with `GET all` and `POST` routes, test them with Postman, then connect them to the frontend via `useGameLoop.ts` (`sendUserData`). 
+
+> TO RUN THE PROJECT: docker compose up (for Linux in needed `sudo docker compose up or sudo docker compose --build`)
+
+
 
 ---
 
