@@ -1,3 +1,3 @@
-### Workshop-Exercise for students
-### Main with completed Code
+### Workshop-Exercise -> for students
+### Main -> with completed Code
 
