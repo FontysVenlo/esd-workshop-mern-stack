@@ -17,9 +17,6 @@ function App() {
   const rawName = dataFromCookiesForName.get("player-name") ?? "No Name - Enter A name to Play";
 
 
-
-
-
   const handleClick = async (e) => {
     if (e) e.preventDefault();
     const userInput = window.prompt("Please enter your name!:");
@@ -52,7 +49,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<TRexGame score={highScore} playerName={rawName} />} />
-          <Route path="/dashboard" element={<DashBoard players={[{ name: "Alice", score: 10 }, { name: "Bob", score: 8 }]} />} />
+          <Route path="/dashboard" element={<DashBoard />} />
         </Routes>
       </BrowserRouter>
     </div>
