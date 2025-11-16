@@ -8,17 +8,8 @@ const mongoose = require('mongoose')
     * @property  {timestamps} - timestamps of the creation
 */
 
-// const userSchema = new mongoose.Schema({
-//     name: {
-//         type: String,
-//         required: true,
-//     },
-//     score: {
-//         type: Number,
-//         required: true
-//     }
-// }, { timestamps: true })
-
+ // === USER SCHEMA CODE ===
+ 
 
 const Users = mongoose.model('users', userSchema);
 module.exports = Users
