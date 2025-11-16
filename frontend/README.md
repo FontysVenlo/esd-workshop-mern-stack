@@ -10,8 +10,6 @@ Welcome to the **Frontend** section of the MERN Dino Game Workshop! In this 30-4
   - Keyboard controls (jump, duck, start/restart)
   - Game state management (waiting, playing, game over)
 
-
-
 ---
 
 ## Folder Structure Explanation
@@ -119,32 +117,32 @@ switch (event.code) {
 
 If you finish early or want extra challenges, try these:
 
-### 🎯 Stretch Goal 1: Add Sound Effects
+###  Stretch Goal 1: Add Sound Effects
 - Add sound effects for jump, collision, and score milestones
 - Use the Web Audio API or a library like `howler.js`
 - **Files to modify:** `src/utils/drawingUtils.ts`, `src/hooks/useGameLoop.ts`
 
-### 🎯 Stretch Goal 2: Implement Power-ups
+###  Stretch Goal 2: Implement Power-ups
 - Add temporary power-ups (speed boost, invincibility, double points)
 - Spawn power-ups randomly like obstacles
 - **Files to modify:** `src/types/gameTypes.ts`, `src/utils/gameUtils.ts`, `src/hooks/useGameLoop.ts`
 
-### 🎯 Stretch Goal 3: Add Particle Effects
+###  Stretch Goal 3: Add Particle Effects
 - Create particle effects when T-Rex collides with obstacles
 - Add dust particles when running
 - **Files to modify:** `src/utils/drawingUtils.ts`, `src/hooks/useGameLoop.ts`
 
-### 🎯 Stretch Goal 4: Mobile Touch Controls
+###  Stretch Goal 4: Mobile Touch Controls
 - Add touch event handlers for mobile devices
 - Support swipe up for jump, swipe down for duck
 - **Files to modify:** `src/hooks/useKeyboardControls.ts` (or create `useTouchControls.ts`)
 
-### 🎯 Stretch Goal 5: Game Difficulty Levels
+###  Stretch Goal 5: Game Difficulty Levels
 - Add easy/medium/hard difficulty settings
 - Adjust obstacle spawn rate and speed increment based on difficulty
 - **Files to modify:** `src/constants/gameConstants.ts`, `src/components/TRexGame/TRexGame.tsx`
 
-### 🎯 Stretch Goal 6: Local Multiplayer Mode
+###  Stretch Goal 6: Local Multiplayer Mode
 - Allow two players to compete side-by-side
 - Use different keys for each player (WASD vs Arrow keys)
 - **Files to modify:** `src/components/TRexGame/TRexGame.tsx`, `src/hooks/useKeyboardControls.ts`

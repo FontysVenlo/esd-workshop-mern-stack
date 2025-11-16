@@ -79,10 +79,10 @@ const MyComponent: React.FC = () => {
 
 ## Why Use Custom Hooks?
 
-✅ **Reusability** - Write logic once, use it everywhere  
-✅ **Organization** - Keep components clean and focused  
-✅ **Testing** - Test logic separately from UI  
-✅ **Separation of Concerns** - Logic vs. presentation
+**Reusability** - Write logic once, use it everywhere  
+**Organization** - Keep components clean and focused  
+**Testing** - Test logic separately from UI  
+**Separation of Concerns** - Logic vs. presentation
 
 ## How This Relates to Task 1
 
