@@ -9,11 +9,8 @@ Welcome to the **Frontend** section of the MERN Dino Game Workshop! In this 30-4
 - A fully functional T-Rex runner game with:
   - Keyboard controls (jump, duck, start/restart)
   - Game state management (waiting, playing, game over)
-  - Collision detection between T-Rex and obstacles
-  - Score tracking and high score persistence
 
 
-### Expected Time: 30-45 minutes
 
 ---
 
@@ -56,7 +53,21 @@ frontend/
 
 ## Step-by-Step Workshop Segments
 
-### Task 1: Implement Keyboard Controls Hook ⏱️ ~8 minutes
+### Task 0: React Hook Introduction ⏱️ ~5 minutes (Theory)
+
+**📖 Read the theory guide:** [TASK_0_HOOKS_THEORY.md](./TASK_0_HOOKS_THEORY.md)
+
+This theory section explains:
+- What React hooks are
+- Built-in hooks (`useState`, `useEffect`)
+- How to create custom hooks
+- How hooks relate to Task 1
+
+**Take 5 minutes to read through the theory before starting Task 1!**
+
+---
+
+### Task 1: Implement Keyboard Controls Hook ⏱️ ~8 minutes 
 
 **File to open:** `src/hooks/useKeyboardControls.ts`
 
@@ -95,85 +106,12 @@ switch (event.code) {
 }
 ```
 
----
+### Task 2: Implement Keyboard Controls Hook 
 
-### Task 2: Implement Game State Management ⏱️ 
+**File to open:** `src/hooks/gameConstants.ts`
 
-**File to open:** `src/components/TRexGame/TRexGame.tsx`
+**Goal:** Play around and find the correct values.
 
-**Goal:** Set up the game state and control functions for starting, jumping, and ducking.
-
-**What to implement:**
-
-- [ ] Initialize game state with `useState` hook
-- [ ] Create `startGame` function to reset game to initial playing state
-- [ ] Create `jump` function that sets T-Rex velocity (only if not already jumping/ducking)
-- [ ] Create `duck` function that toggles ducking state
-- [ ] Pass these functions to the `useKeyboardControls` hook
-
-**TODO Checklist:**
-
-1. In `TRexGame.tsx`, find the `gameState` initialization
-2. Implement `startGame` callback to reset:
-   - `state: 'PLAYING'`
-   - `score: 0`
-   - `speed: INITIAL_SPEED`
-   - `trexY: GROUND_Y - TREX_HEIGHT`
-   - Clear obstacles array
-3. Implement `jump` callback that:
-   - Checks if already jumping or ducking (return early if so)
-   - Sets `isJumping: true` and `trexVelocityY: JUMP_VELOCITY`
-4. Implement `duck` callback that sets `isDucking` based on the parameter
-5. Pass all callbacks to `useKeyboardControls` hook
-
-**Key Code Reference:**
-```typescript
-const jump = useCallback(() => {
-  setGameState(prevState => {
-    // TODO: Check if already jumping/ducking
-    // TODO: Set jumping state and velocity
-  });
-}, []);
-```
-
----
-
-### Task 3: Implement Collision Detection ⏱️ 
-
-**File to open:** `src/utils/gameUtils.ts`
-
-**Goal:** Create functions to generate obstacles and detect collisions between T-Rex and obstacles.
-
-**What to implement:**
-
-- [ ] `generateObstacle` function that creates random obstacles (cactus or pterodactyl)
-- [ ] `checkCollision` function that uses AABB (Axis-Aligned Bounding Box) collision detection
-- [ ] Ensure obstacles spawn at appropriate distances
-
-**TODO Checklist:**
-
-1. In `gameUtils.ts`, find the `generateObstacle` function
-2. Implement obstacle generation:
-   - Randomly choose between `'cactus'` and `'pterodactyl'` (30% chance for pterodactyl)
-   - For cactus: random variant (1, 2, or 3 cacti), width based on variant, height 32
-   - For pterodactyl: width 40, height 35, random Y position above ground
-   - Set `x` position ensuring minimum distance from last obstacle
-3. Implement `checkCollision` function:
-   - Check if T-Rex hitbox overlaps with obstacle hitbox
-   - Use AABB collision: check all four boundaries
-   - Return `true` if collision detected, `false` otherwise
-
-**Key Code Reference:**
-```typescript
-export const checkCollision = (trex: TRexHitbox, obstacle: Obstacle): boolean => {
-  // TODO: Implement AABB collision detection
-  // Check: trex.x < obstacle.x + obstacle.width
-  // Check: trex.x + trex.width > obstacle.x
-  // Check: trex.y < obstacle.y + obstacle.height
-  // Check: trex.y + trex.height > obstacle.y
-  // Return true if all conditions are met
-};
-```
 
 
 
@@ -243,12 +181,5 @@ If you finish early or want extra challenges, try these:
 
 ---
 
-## Next Steps
-
-After completing the frontend:
-1. Test your game thoroughly
-2. Try the stretch goals if time permits
-3. Move on to the Backend section of the workshop
-4. Integrate frontend and backend together
 
 **Happy coding! 🦖🎮**
