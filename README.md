@@ -1,18 +1,6 @@
-
-Pino worky
-- [ ] Fix sprites (make them individual)
-- [ ] Loading screen for sprites 
-- [ ] Start state animate and Game over state animate 
-- [ ] Add funny spritekv
-
-Georgi's worky
-- [x] connect backend and fronted
-- [ ] trasfor saving data from local storage to cookies
-- [ ] Username functionality
-- [ ] Socket.io - Leadrboard
-
-When everything completed we review the whole part and we discuss what we need to take out for the workshop and at the same time we write the slides. We take out enoght blocks to fill in the theory part.
-
-
-Set Up : cd {to each eand of the project to get node_modules}
-filling the .evn_example  for the backend
+- What is Mern
+- What is it for
+- Why is it used instead of X counterpart
+- What is it typically used for (E.g. of serious application in real world enviornment and e.g. of stupid application like the trex game which you all know and love)
+- Explain how the hypothetical trex game would be strucutred with MERN (Brief secret introduction to project sturcture)
+- Surprise them, were building the trex game, start backend pair programming
