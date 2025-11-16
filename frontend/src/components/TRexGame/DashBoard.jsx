@@ -1,22 +1,15 @@
-import { useEffect, useState, useRef } from "react";
-import initSocket from "../../context/socket";
+import { useEffect, useState } from "react";
+
 
 
 const DashBoard = () => {
     const api = import.meta.env.VITE_BACKEND_URL;
     const [players, setPlayers] = useState([]);
-    const socketRef = useRef();
-
-    if (!socketRef.current) {
-        socketRef.current = initSocket();
-    }
-    const socket = socketRef.current;
-
 
     const getAllPlayers = async (e) => {
 
         try {
-            const response = await fetch(`${api}/api/routes/get-user-all`, {
+            const response = await fetch(`${api}/api/routes/users/get-user-all`, {
                 method: 'GET',
                 headers: { "Accept": "application/json" },
             });
@@ -41,25 +34,22 @@ const DashBoard = () => {
         getAllPlayers()
     }, [api])
 
-    useEffect(() => {
-
-        if (!socket.connected) {
-            socket.connect();
-        }
-
-        const onList = (list) => setPlayers(list);
-        socket.on("newPlayers", onList);
-        return () => {
-            socket.off("newPlayers", onList);
-        };
-
-    }, [])
 
     return (
         <div className="dashboard max-w-4xl mx-auto p-6 bg-gray-700 text-gray-100 rounded-xl bg-">
             <h2 className="title text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">
                 Scoreboard
             </h2>
+            {
+                !players.length  ?(
+                    <h1>
+                        No players yet
+                    </h1>
+                ):
+                (
+                    <br />
+                )
+            }
             <ul className="player-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {players
                     .sort((a, b) => b.score - a.score)

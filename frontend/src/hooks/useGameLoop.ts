@@ -173,20 +173,28 @@ export const useGameLoop = ({
 
   const sendUserData = async (api: string, playerName: string, score: string) => {
     try {
-      const response = await fetch(`${api}/api/routes/set-user`, {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: playerName, score: score })
-      });
+      /* //TODO 
+      1. Create a const and add request details (method, headers, body, credentials) to it (API call).
+      2. Use @const {api}  in the API call
+      3. Pass the credentials in the request
+      3. ENSURE 'playerName' and 'score' are correctly JSON.stringify-ed in the body.
+      4. Make sure the CHECK works accordingly.
+      */
 
-      const json = await response.json()
 
-      if (!response.ok) {
-        console.error("Failed to save user:", json.error);
-      } else {
-        console.log("User saved successfully:", json.user ?? json.newUser);
-      }
+      // === REQUEST /& RESPONCE CODE ===
+    
+
+      
+
+      // === UNCOMMENT THIS CODE WHEN READY TO BE USED ===
+
+      
+      // if (!response.ok) {
+      //   console.error("Failed to save user:", json.error);
+      // } else {
+      //   console.log("User saved successfully:", json.user ?? json.newUser);
+      // }
     } catch (err) {
       console.error("Error sending user data:", err);
     }
